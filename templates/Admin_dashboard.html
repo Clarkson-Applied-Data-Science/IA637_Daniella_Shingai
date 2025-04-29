@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+  <h2 class="text-center mb-4">📊 Admin Dashboard</h2>
+  <p class="text-center text-muted mb-4 fs-5">
+	Welcome, Admin — to the analytics world!
+	
+  </p>
+  <div class="mb-5" style="max-width: 800px; margin: auto;">
+    <h4 class="mb-3 text-center">📋 Daily Revenue – Last 10 Days</h4>
+    <table class="table table-bordered table-striped">
+      <thead class="table-light">
+        <tr>
+          <th>Date</th>
+          <th>Revenue ($)</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in data.daily_revenue[-10:] %}
+        <tr>
+          <td>{{ row.date }}</td>
+          <td>${{ "%.2f"|format(row.revenue) }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="mb-4 text-center">
+    <label for="chartSelect" class="form-label fw-bold">Select a Chart based on your needs:</label>
+    <select id="chartSelect" class="form-select w-auto d-inline-block">
+      <option value="bookingsByRoomType">Bookings by Room Type</option>
+	  <option value="dailyRevenue">Daily Revenue</option>
+      <option value="revenueByRoomType">Revenue by Room Type</option>
+      <option value="topGuests">Top 5 Guests</option>
+      <option value="bookingsOverTime">Bookings Over Time</option>
+    </select>
+  </div>
+
+  <div style="max-width: 800px; margin: auto;">
+    <canvas id="dashboardChart" height="300"></canvas>
+  </div>
+  
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const data = {{ data | tojson | safe }};
+  const ctx = document.getElementById('dashboardChart').getContext('2d');
+  let chartInstance = null;
+
+  function renderChart(type) {
+    if (chartInstance) chartInstance.destroy();
+
+    if (type === 'bookingsByRoomType') {
+      chartInstance = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: data.bookings_by_room_type.map(x => x.room_type),
+          datasets: [{
+            label: 'Bookings',
+            data: data.bookings_by_room_type.map(x => x.count),
+            backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e']
+          }]
+        }
+      });
+    }
+
+    if (type === 'revenueByRoomType') {
+      chartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: data.revenue_by_room_type.map(x => x.room_type),
+          datasets: [{
+            label: 'Revenue ($)',
+            data: data.revenue_by_room_type.map(x => x.revenue),
+            backgroundColor: '#1cc88a'
+          }]
+        },
+        options: {
+          scales: {
+            y: { beginAtZero: true }
+          }
+        }
+      });
+    }
+
+    if (type === 'topGuests') {
+      chartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: data.top_guests.map(x => x.name),
+          datasets: [{
+            label: 'Bookings',
+            data: data.top_guests.map(x => x.bookings),
+            backgroundColor: '#36b9cc'
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          scales: {
+            x: { beginAtZero: true }
+          }
+        }
+      });
+    }
+
+    if (type === 'bookingsOverTime') {
+      chartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: data.bookings_over_time.map(x => x.date),
+          datasets: [{
+            label: 'Bookings',
+            data: data.bookings_over_time.map(x => x.count),
+            borderColor: '#4e73df',
+            borderWidth: 2,
+            fill: false,
+            tension: 0.3
+          }]
+        },
+        options: {
+          scales: {
+            y: { beginAtZero: true }
+          }
+        }
+      });
+    }
+	if (type === 'dailyRevenue') {
+  chartInstance = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: data.daily_revenue.map(x => x.date),
+      datasets: [{
+        label: 'Revenue ($)',
+        data: data.daily_revenue.map(x => x.revenue),
+        borderColor: '#f6c23e',
+        borderWidth: 2,
+        fill: false,
+        tension: 0.3
+      }]
+    },
+    options: {
+      scales: {
+        y: { beginAtZero: true }
+      }
+    }
+  });
+}
+}
+
+  document.addEventListener("DOMContentLoaded", function () {
+    renderChart('bookingsByRoomType');
+    document.getElementById('chartSelect').addEventListener('change', function () {
+      renderChart(this.value);
+    });
+  });
+</script>
+{% endblock %}

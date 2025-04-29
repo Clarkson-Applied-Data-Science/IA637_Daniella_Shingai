@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>🛏️ Welcome to the Room Management Page</h2>
+        <a href="/mainAdmin" class="btn btn-outline-primary">🏠 Back to Main Menu</a>
+    </div>
+
+    <p class="lead">Below is a list of all rooms. You can <strong>edit</strong>, <strong>delete</strong>, or <strong>create new</strong> rooms as needed.</p>
+
+    <div class="mb-3">
+        <a href="/rooms/manage?pkval=new" class="btn btn-success">➕ Create New Room</a>
+    </div>
+
+    <table class="table table-bordered table-hover shadow-sm">
+        <thead class="table-light">
+            <tr>
+                <th>Name</th>
+                <th>Room Type</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th style="width: 180px;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for room in objs.data %}
+                <tr>
+                    <td>{{ room.name }}</td>
+                    <td>{{ room.room_type }}</td>
+                    <td>${{ room.price }}</td>
+                    <td>{{ room.availability_status }}</td>
+                    <td>
+                        <a href="/rooms/manage?pkval={{ room.id }}" class="btn btn-sm btn-primary me-2">✏️ Edit</a>
+                        <a href="/rooms/manage?pkval={{ room.id }}&action=delete" 
+                           onclick="return confirm('Are you sure you want to delete this room?');" 
+                           class="btn btn-sm btn-danger">🗑️ Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

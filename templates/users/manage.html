@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>✏️ Edit User</h2>
+        <a href="/users/manage" class="btn btn-secondary">⬅ Back to User List</a>
+    </div>
+
+    {% if obj.data and obj.data[0] %}
+    <form action="/users/manage?action=update&pkval={{ obj.data[0].id }}" method="post" class="card shadow p-4">
+        <div class="mb-3">
+            <label for="name" class="form-label">Full Name:</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{ obj.data[0].name }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="role" class="form-label">Role:</label>
+            <select class="form-select" id="role" name="role" required>
+                <option value="admin" {% if obj.data[0].role == 'admin' %}selected{% endif %}>Admin</option>
+                <option value="guest" {% if obj.data[0].role == 'guest' %}selected{% endif %}>Customer</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="password" class="form-label">Password:</label>
+            <input type="password" class="form-control" id="password" name="password" value="{{ obj.data[0].password }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="password2" class="form-label">Confirm Password:</label>
+            <input type="password" class="form-control" id="password2" name="password2" value="{{ obj.data[0].password2 }}" required>
+        </div>
+
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary me-2">💾 Save Changes</button>
+            <a href="/users/manage" class="btn btn-outline-secondary">Cancel</a>
+        </div>
+    </form>
+    {% else %}
+    <div class="alert alert-warning">
+        ⚠️ No user found to edit.
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}

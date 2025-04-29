@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="text-center text-success mb-4">🛎️ Complete Your Booking</h2>
+
+    <!-- Optional: Show flash messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <div class="card shadow p-4 mx-auto" style="max-width: 600px;">
+        <!-- Live availability display -->
+        <div id="availability_status" class="mb-3 fw-bold text-center text-info"></div>
+
+        <form method="POST" action="/check_in">
+            <div class="mb-3">
+                <label class="form-label">Room Type</label>
+                <select name="room_type" id="room_type" class="form-select" onchange="checkAvailability()" required>
+                    {% for room in room_types %}
+                        <option value="{{ room.room_type }}" {% if room.room_type == default_type %}selected{% endif %}>
+                            {{ room.room_type }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Check-In Date</label>
+                <input type="date" name="check_in_date" id="check_in_date" value="{{ default_check_in }}" class="form-control" onchange="checkAvailability()" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Check-Out Date</label>
+                <input type="date" name="check_out_date" id="check_out_date" value="{{ default_check_out }}" class="form-control" onchange="checkAvailability()" required>
+            </div>
+
+            <div class="d-grid">
+                <button type="submit" class="btn btn-success btn-lg rounded-pill">Confirm Booking</button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- JavaScript for live availability -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        checkAvailability();
+
+        function checkAvailability() {
+            const roomType = document.getElementById("room_type").value;
+            const checkIn = document.getElementById("check_in_date").value;
+            const checkOut = document.getElementById("check_out_date").value;
+            const statusDiv = document.getElementById("availability_status");
+
+            if (!roomType || !checkIn || !checkOut) {
+                statusDiv.innerText = '';
+                return;
+            }
+
+            // ✅ Add validation for date logic
+            const checkInDate = new Date(checkIn);
+            const checkOutDate = new Date(checkOut);
+            if (checkInDate >= checkOutDate) {
+                statusDiv.innerText = "⚠️ Check-out date must be after check-in date.";
+                statusDiv.classList.remove("text-success");
+                statusDiv.classList.add("text-warning");
+                return;
+            }
+
+            statusDiv.innerText = "⏳ Checking availability...";
+            statusDiv.classList.remove("text-danger", "text-success", "text-warning");
+            statusDiv.classList.add("text-muted");
+
+            fetch(`/check_availability?room_type=${roomType}&check_in_date=${checkIn}&check_out_date=${checkOut}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.available) {
+                        statusDiv.innerText = data.message;
+                        statusDiv.classList.remove("text-danger", "text-warning");
+                        statusDiv.classList.add("text-success");
+                    } else {
+                        statusDiv.innerText = "❌ Room is not available for selected dates.";
+                        statusDiv.classList.remove("text-success", "text-warning");
+                        statusDiv.classList.add("text-danger");
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    statusDiv.innerText = "⚠️ Error checking availability.";
+                    statusDiv.classList.remove("text-success");
+                    statusDiv.classList.add("text-warning");
+                });
+        }
+
+        document.getElementById("room_type").addEventListener("change", checkAvailability);
+        document.getElementById("check_in_date").addEventListener("change", checkAvailability);
+        document.getElementById("check_out_date").addEventListener("change", checkAvailability);
+    });
+</script>
+{% endblock %}

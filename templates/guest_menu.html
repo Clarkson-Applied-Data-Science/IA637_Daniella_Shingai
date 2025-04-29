@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="container mt-5 text-center">
+    <h2>Welcome, {{ user.name }}!</h2>
+    <p class="lead">What would you like to do today?</p>
+
+
+
+
+
+
+    <div class="d-grid gap-3 col-6 mx-auto mt-4">
+      <a href="/check_in" class="btn btn-primary">Make a New Booking</a>
+      <a href="/guest/dashboard" class="btn btn-secondary">Check Your Booking</a>
+      <a href="/contact" class="btn btn-info">Contact Us</a>
+    </div>
+
+    <hr class="my-4" />
+    <p>For more information, please visit our <a href="/">home page</a>.</p>
+  </div>
+{% endblock %}

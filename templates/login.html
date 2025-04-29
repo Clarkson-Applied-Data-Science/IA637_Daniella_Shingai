@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="auth-wrapper">
+  <!-- Flash Messages -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-messages">
+        {% for category, message in messages %}
+          <div class="flash-message {{ category }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <div class="auth-container">
+    <!-- Login Form -->
+    <div id="loginForm" class="form-box">
+      <h2>Login</h2>
+      <form method="POST" action="{{ url_for('login') }}">
+        <input type="hidden" name="action" value="login">
+
+        <label for="name">Username</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="submit">Login</button>
+      </form>
+      <p class="toggle-link">Don't have an account? <a href="javascript:void(0);" onclick="toggleForms()">Register</a></p>
+    </div>
+
+    <!-- Register Form -->
+    <div id="registerForm" class="form-box" style="display: none;">
+      <h2>Register</h2>
+      <form method="POST" action="{{ url_for('login') }}">
+        <input type="hidden" name="action" value="register">
+
+        <label for="name">Username</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+
+        <label for="password2">Confirm Password</label>
+        <input type="password" id="password2" name="password2" required>
+
+        <button type="submit">Register</button>
+      </form>
+      <p class="toggle-link">Already have an account? <a href="javascript:void(0);" onclick="toggleForms()">Login</a></p>
+    </div>
+  </div>
+</div>
+
+<script>
+  function toggleForms() {
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+
+    loginForm.style.display = loginForm.style.display === 'none' ? 'block' : 'none';
+    registerForm.style.display = registerForm.style.display === 'block' ? 'none' : 'block';
+  }
+</script>
+{% endblock %}

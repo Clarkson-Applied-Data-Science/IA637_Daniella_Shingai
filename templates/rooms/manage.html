@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>✏️ Edit Room</h2>
+        <a href="/rooms/manage" class="btn btn-secondary">⬅ Back to Room List</a>
+    </div>
+
+    <form action="/rooms/manage?action=update&pkval={{ obj.data[0].id }}" method="post" class="card shadow p-4">
+        <div class="mb-3">
+            <label for="name" class="form-label">Room Name:</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{ obj.data[0].name }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="room_type" class="form-label">Room Type:</label>
+            <input type="text" class="form-control" id="room_type" name="room_type" value="{{ obj.data[0].room_type }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="price" class="form-label">Price (USD):</label>
+            <input type="number" step="0.01" class="form-control" id="price" name="price" value="{{ obj.data[0].price }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="description" class="form-label">Description:</label>
+            <textarea class="form-control" id="description" name="description" rows="3">{{ obj.data[0].description }}</textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="availability_status" class="form-label">Availability Status:</label>
+            <select class="form-select" id="availability_status" name="availability_status" required>
+                <option value="available" {% if obj.data[0].availability_status == 'available' %}selected{% endif %}>Available</option>
+                <option value="booked" {% if obj.data[0].availability_status == 'booked' %}selected{% endif %}>Booked</option>
+                <option value="maintenance" {% if obj.data[0].availability_status == 'maintenance' %}selected{% endif %}>Maintenance</option>
+            </select>
+        </div>
+
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary me-2">💾 Save Changes</button>
+            <a href="/rooms/manage" class="btn btn-outline-secondary">Cancel</a>
+        </div>
+    </form>
+
+</div>
+{% endblock %}

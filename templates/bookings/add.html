@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="error_text">
+        {% if obj.errors|length > 0 %}
+            {% for error in obj.errors %}
+                <div>{{ error }}</div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <div>
+        <form action="/bookings/manage?action=insert" method="POST">
+            Guest (User):<br>
+            <select name="user_id" required>
+                {% for user in obj.users %}
+                    {% if obj.data[0].user_id == user.id %}
+                        <option selected value="{{ user.id }}">{{ user.name }}</option>
+                    {% else %}
+                        <option value="{{ user.id }}">{{ user.name }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            <br><br>
+
+            Room Type:<br>
+            <select name="room_type" required>
+                {% for room in obj.room_types %}
+                    {% if obj.data[0].room_type == room.value %}
+                        <option selected value="{{ room.value }}">{{ room.text }}</option>
+                    {% else %}
+                        <option value="{{ room.value }}">{{ room.text }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            <br><br>
+
+            Check-In Date:<br>
+            <input type="date" name="check_in_date" value="{{ obj.data[0].check_in_date }}" required />
+            <br><br>
+
+            Check-Out Date:<br>
+            <input type="date" name="check_out_date" value="{{ obj.data[0].check_out_date }}" required />
+            <br><br>
+
+            Status:<br>
+            <select name="status" required>
+                <option value="pending" {% if obj.data[0].status == 'pending' %}selected{% endif %}>Pending</option>
+                <option value="confirmed" {% if obj.data[0].status == 'confirmed' %}selected{% endif %}>Confirmed</option>
+                <option value="canceled" {% if obj.data[0].status == 'canceled' %}selected{% endif %}>Canceled</option>
+            </select>
+            <br><br>
+
+            <input type="submit" value="Submit" />
+        </form>
+    </div>
+{% endblock %}
+

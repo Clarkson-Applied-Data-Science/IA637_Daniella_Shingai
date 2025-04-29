@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="error_text">
+        {% if obj.errors|length > 0 %}
+            {% for error in obj.errors %}
+                <div>{{ error }}</div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <div>
+        <form action="/rooms/manage?action=insert" method="POST">
+            Room Name:<br>
+            <input type="text" name="name" value="{{ obj.data[0].name }}" required />
+            <br>
+
+            Room Type:<br>
+            <input type="text" name="room_type" value="{{ obj.data[0].room_type }}" required />
+            <br>
+
+            Price:<br>
+            <input type="number" name="price" step="0.01" value="{{ obj.data[0].price }}" required />
+            <br>
+
+            Description:<br>
+            <textarea name="description" rows="4" cols="40">{{ obj.data[0].description }}</textarea>
+            <br>
+
+            
+
+            <input type="submit" value="Submit" />
+        </form>
+    </div>
+{% endblock %}

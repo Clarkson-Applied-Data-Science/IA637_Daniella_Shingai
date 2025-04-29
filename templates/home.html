@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+	<div class="hero-container">
+	  <div class="text-content">
+        
+                <h1 class="display-4 text-primary">Welcome to Hotel le Marseillais</h1>
+                <h4 class="text-muted mb-3">Comfort, security, and affordable rates –Confort, sécurité et tarifs abordables.votre chez-vous loin de chez vous</h4>
+                <p class="lead">
+                    Enjoy a luxurious stay with us at an affordable price. Your comfort and security are our top priorities.
+                </p>
+                <a href="/check_in" class="btn btn-primary btn-lg rounded-pill shadow mt-4">🛎️ Check In / Réservez</a>
+            </div>
+
+            <!-- Hotel Image -->
+            <div class="image-content">
+                <img src="{{ url_for('static', filename='hotel.png') }}" alt="Hotel Front" class="img-fluid rounded shadow-sm">
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Availability Check Bar -->
+<!-- Availability Check Bar -->
+<!-- Availability Check Bar -->
+<section class="availability-bar">
+	<form id="availability-form" class="availability-form">
+	  <div class="form-group">
+		<label for="check_in_date">Check-in Date</label>
+		<input type="date" id="check_in_date" name="check_in_date" required>
+	  </div>
+  
+	  <div class="form-group">
+		<label for="check_out_date">Check-out Date</label>
+		<input type="date" id="check_out_date" name="check_out_date" required>
+	  </div>
+  
+	  <div class="form-group">
+		<label for="room_type">Room Type</label>
+		<select id="room_type" name="room_type" required>
+		  <option value="">Select Room Type</option>
+		  <option value="Standard">Standard Room</option>
+		  <option value="Deluxe">Deluxe Room</option>
+		  <option value="Executive Suite">Executive Suite</option>
+		</select>
+	  </div>
+  
+	  <button type="button" id="check-btn">Check Availability</button>
+	</form>
+  
+	<div id="availability_result" class="text-center mt-3 fw-bold"></div>
+  </section>
+  
+  
+
+<!-- Rooms Section -->
+<section class="rooms-section py-5">
+    <div class="container">
+        <h2 class="text-center text-primary mb-4">Our Rooms</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="room-card shadow-sm">
+                    <img src="/static/room1.png" alt="Room 1" class="img-fluid rounded">
+                    <p class="text-center mt-2">Standard Room</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="room-card shadow-sm">
+                    <img src="/static/room2.png" alt="Room 2" class="img-fluid rounded">
+                    <p class="text-center mt-2">Deluxe Room</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="room-card shadow-sm">
+                    <img src="/static/room3.png" alt="Room 3" class="img-fluid rounded">
+                    <p class="text-center mt-2">Executive Suite</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<div class="check-in text-center my-5">
+    <a href="/check_in" class="btn btn-primary btn-lg rounded-pill shadow">🛎️ Book Your Stay Now</a>
+</div>
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+	  console.log("✅ JS loaded for availability check");
+
+	  document.getElementById("check-btn").addEventListener("click", function () {
+		const roomType = document.getElementById("room_type").value;
+		const checkIn = document.getElementById("check_in_date").value;
+		const checkOut = document.getElementById("check_out_date").value;
+		const resultDiv = document.getElementById("availability_result");
+
+		if (!roomType || !checkIn || !checkOut) {
+		  resultDiv.innerText = "⚠️ Please fill in all fields.";
+		  resultDiv.className = "text-warning";
+		  return;
+		}
+
+		// ✅ Add date logic check here
+		const checkInDate = new Date(checkIn);
+		const checkOutDate = new Date(checkOut);
+		if (checkInDate >= checkOutDate) {
+		  resultDiv.innerText = "⚠️ Check-out date must be after check-in date.";
+		  resultDiv.className = "text-warning";
+		  return;
+		}
+
+		resultDiv.innerText = "⏳ Checking availability...";
+		resultDiv.className = "text-muted";
+
+		fetch(`/check_availability?room_type=${roomType}&check_in_date=${checkIn}&check_out_date=${checkOut}`)
+		  .then(response => response.json())
+		  .then(data => {
+			if (data.available) {
+			  if (data.login_required) {
+				resultDiv.innerHTML = `
+				  ✅ Room is available!<br>
+				  <a href="/login" class="btn btn-outline-primary mt-2">Log in to book</a>
+				`;
+				resultDiv.className = "text-success";
+			  } else {
+				window.location.href = `/check_in?room_type=${roomType}&check_in_date=${checkIn}&check_out_date=${checkOut}`;
+			  }
+			} else {
+			  resultDiv.innerText = "❌ Sorry, no rooms available for those dates.";
+			  resultDiv.className = "text-danger";
+			}
+		  })
+		  .catch(err => {
+			console.error("Fetch error:", err);
+			resultDiv.innerText = "⚠️ Something went wrong while checking availability.";
+			resultDiv.className = "text-danger";
+		  });
+	  });
+	});
+</script>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>✏️ Edit Booking</h2>
+        <a href="/bookings/manage" class="btn btn-secondary">⬅ Back to Booking List</a>
+    </div>
+
+    <form action="/bookings/manage?action=update&pkval={{ obj.data[0].id }}" method="post" class="card shadow p-4">
+        <div class="mb-3">
+            <label for="user_id" class="form-label">Guest (User):</label>
+            <select class="form-select" id="user_id" name="user_id" required>
+                {% for user in obj.users %}
+                    <option value="{{ user.id }}" {% if user.id == obj.data[0].user_id %}selected{% endif %}>
+                        {{ user.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="room_type" class="form-label">Room Type:</label>
+            <select class="form-select" id="room_type" name="room_type" required>
+                {% for room in obj.room_types %}
+                    <option value="{{ room.value }}" {% if room.value == obj.data[0].room_type %}selected{% endif %}>
+                        {{ room.text }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="check_in_date" class="form-label">Check-In Date:</label>
+            <input type="date" class="form-control" id="check_in_date" name="check_in_date" value="{{ obj.data[0].check_in_date }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="check_out_date" class="form-label">Check-Out Date:</label>
+            <input type="date" class="form-control" id="check_out_date" name="check_out_date" value="{{ obj.data[0].check_out_date }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="status" class="form-label">Status:</label>
+            <select class="form-select" id="status" name="status" required>
+                <option value="pending" {% if obj.data[0].status == 'pending' %}selected{% endif %}>Pending</option>
+                <option value="confirmed" {% if obj.data[0].status == 'confirmed' %}selected{% endif %}>Confirmed</option>
+                <option value="canceled" {% if obj.data[0].status == 'canceled' %}selected{% endif %}>Canceled</option>
+            </select>
+        </div>
+
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary me-2">💾 Save Changes</button>
+            <a href="/bookings/manage" class="btn btn-outline-secondary">Cancel</a>
+        </div>
+    </form>
+
+</div>
+{% endblock %}

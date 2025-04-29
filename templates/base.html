@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel le Marseillais</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<!-- Header Section with Logo -->
+<header class="header">
+    <div class="header-bar">
+        <div class="logo">
+            <svg width="100%" height="100" viewBox="0 0 1400 80" xmlns="http://www.w3.org/2000/svg">
+                <rect x="0" y="0" width="100%" height="100" fill="#007bff" rx="10"/>
+                <text x="30" y="50" font-family="Georgia, serif" font-size="50" fill="#FFD700">Hotel le Marseillais</text>
+            </svg>
+        </div>
+        <nav class="nav">
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <a href="/login">Login</a>
+        </nav>
+    </div>
+</header>
+
+<!-- Main Content Section -->
+<main class="main-content">
+    {% block content %}
+    {% endblock %}
+</main>
+
+<!-- Footer Section -->
+<footer class="footer">
+    <p>&copy; 2025 Hotel le Marseillais. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

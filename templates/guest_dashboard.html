@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-4 text-primary">🛏️ Your Bookings & Requests</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="mb-3">
+          {% for category, message in messages %}
+            <div class="alert alert-{{ 'danger' if category == 'error' else category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    {% if bookings %}
+        {% for b in bookings %}
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">{{ b.room_type }} (Booking ID: {{ b.id }})</h5>
+                <p class="card-text">
+                    <strong>Check-in:</strong> {{ b.check_in_date }}<br>
+                    <strong>Check-out:</strong> {{ b.check_out_date }}<br>
+                    <strong>Status:</strong> {{ b.status }}
+                </p>
+                <form method="POST">
+                    <input type="hidden" name="booking_id" value="{{ b.id }}">
+                    
+                    <div class="mb-2">
+                        <label for="message_{{ b.id }}" class="form-label">Make a Request</label>
+                        <input type="text" id="message_{{ b.id }}" name="message" class="form-control"
+                                     placeholder="e.g. Request warm towels" required minlength="3">
+                    </div>
+                
+                    <button type="submit" class="btn btn-outline-primary btn-sm">Submit Request</button>
+                </form>
+                
+                
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>You currently have no bookings.</p>
+    {% endif %}
+</div>
+{% endblock %}

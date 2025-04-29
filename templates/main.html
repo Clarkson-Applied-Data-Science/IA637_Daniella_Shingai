@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>🏨 Admin Dashboard</h1>
+
+<div style="display: flex; flex-wrap: wrap; gap: 2rem;">
+
+  <!-- User Management -->
+  <div class="card" style="padding: 1rem; border: 1px solid #ccc; border-radius: 8px;">
+    <h2>👤 User Management</h2>
+    <ul>
+      <li><a href="/users/manage?pkval=new">➕ Create New User</a></li>
+      <li><a href="/users/manage">📝 View / Update / Delete Users</a></li>
+    </ul>
+  </div>
+
+  <!-- Room Management -->
+  <div class="card" style="padding: 1rem; border: 1px solid #ccc; border-radius: 8px;">
+    <h2>🛏️ Room Management</h2>
+    <ul>
+      <li><a href="/rooms/manage?pkval=new">➕ Add New Room</a></li>
+      <li><a href="/rooms/manage">📝 View / Update / Delete Rooms</a></li>
+      <li><a href="/availability" class="text-primary">🔍 Check Room Availability</a></li>
+    </ul>
+  </div>
+
+  <!-- Booking Management -->
+  <div class="card" style="padding: 1rem; border: 1px solid #ccc; border-radius: 8px;">
+    <h2>📅 Booking Management</h2>
+    <ul>
+      <li><a href="/bookings/manage?pkval=new">➕ Create New Booking</a></li>
+      <li><a href="/bookings/manage">📝 View / Update / Delete Bookings</a></li>
+      <li><a href="/admin/confirm_booking">✅ Confirm Pending Bookings</a></li>
+    </ul>
+  </div>
+  <!-- Data analysis -->
+  <div class="card" style="padding: 1rem; border: 1px solid #ccc; border-radius: 8px;">
+    <h2> 🤑Hotel Data Management</h2>
+    <ul>
+        <li><a href="/admin/Adashboard">📊 Data Analysis Dashboard</a></li>
+    </ul>
+  </div>
+
+</div>
+{% endblock %}
+

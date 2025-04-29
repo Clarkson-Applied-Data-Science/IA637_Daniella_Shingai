@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="text-center text-primary mb-4">🔍 Check Room Availability</h2>
+
+    <div class="card shadow p-4 mx-auto" style="max-width: 600px;">
+        <form id="availability-form">
+            <div class="mb-3">
+                <label class="form-label">Room Type</label>
+                <select id="room_type" class="form-select" required>
+                    {% for room in room_types %}
+                        {% set room_type = room.room_type.strip() %}
+                        {% if room_type in ['Standard', 'Deluxe', 'Suite'] %}
+                            <option value="{{ room_type }}">{{ room_type }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Check-In Date</label>
+                <input type="date" id="check_in_date" class="form-control"
+                       value="{{ default_check_in|default('') }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Check-Out Date</label>
+                <input type="date" id="check_out_date" class="form-control"
+                       value="{{ default_check_out|default('') }}" required>
+            </div>
+
+            <div class="d-grid">
+                <button type="button" id="check-btn" class="btn btn-primary">Check Availability</button>
+            </div>
+        </form>
+
+        <div id="availability_result" class="mt-4 text-center fw-bold"></div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const roomTypeInput = document.getElementById("room_type");
+        const checkInInput = document.getElementById("check_in_date");
+        const checkOutInput = document.getElementById("check_out_date");
+        const resultDiv = document.getElementById("availability_result");
+        const checkBtn = document.getElementById("check-btn");
+
+        function clearClasses() {
+            resultDiv.classList.remove("text-success", "text-danger", "text-warning", "text-muted");
+        }
+
+        function displayMessage(message, className) {
+            clearClasses();
+            resultDiv.classList.add(className);
+            resultDiv.innerHTML = message;
+        }
+
+        function checkAvailability() {
+            const roomType = roomTypeInput.value;
+            const checkIn = checkInInput.value;
+            const checkOut = checkOutInput.value;
+
+            if (!roomType || !checkIn || !checkOut) {
+                clearClasses();
+                resultDiv.innerHTML = "";
+                return;
+            }
+
+            displayMessage("⏳ Checking availability...", "text-muted");
+
+            fetch(`/check_availability?room_type=${encodeURIComponent(roomType)}&check_in_date=${checkIn}&check_out_date=${checkOut}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.available) {
+                        const message = data.message || "✅ Room is available!";
+                        const actionButton = data.login_required
+                            ? `<a href="/login" class="btn btn-outline-primary mt-2">Log In to Book</a>`
+                            : `<a href="/check_in?room_type=${encodeURIComponent(roomType)}&check_in_date=${checkIn}&check_out_date=${checkOut}" class="btn btn-success mt-2">Proceed to Book</a>`;
+                        displayMessage(`${message}<br>${actionButton}`, "text-success");
+                    } else {
+                        displayMessage("❌ No rooms available for selected dates.", "text-danger");
+                    }
+                })
+                .catch(error => {
+                    console.error("❌ Fetch error:", error);
+                    displayMessage("⚠️ Something went wrong. Please try again.", "text-warning");
+                });
+        }
+
+        checkBtn.addEventListener("click", checkAvailability);
+        [roomTypeInput, checkInInput, checkOutInput].forEach(input => {
+            input.addEventListener("change", checkAvailability);
+        });
+
+        if (checkInInput.value && checkOutInput.value) {
+            checkAvailability();
+        }
+    });
+</script>
+{% endblock %}

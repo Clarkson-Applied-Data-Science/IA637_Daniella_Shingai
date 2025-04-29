@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5" style="background-color: white;">
+
+    <h2 class="text-center text-primary mb-4">About Us</h2>
+
+    <div class="mb-4 fs-5">
+        <p>
+            Our hotel was proudly founded in <strong>2022</strong> as a small family-owned business.
+            What started as a humble idea to offer genuine hospitality has grown into a welcoming space
+            for travelers from all around the world.
+        </p>
+        <p>
+            Our team of friendly and dedicated employees goes above and beyond to ensure your stay is smooth,
+            relaxing, and memorable. Whether you're visiting for business or leisure, you’ll always feel at home.
+        </p>
+        <p>
+            We invite you to enjoy our top-tier facilities, including a refreshing <strong>swimming pool</strong>,
+            a fully equipped <strong>gym</strong>, and our cozy <strong>in-house restaurant</strong> serving freshly prepared meals daily.
+        </p>
+    </div>
+
+    <!-- Facilities Section -->
+    <div class="text-center mt-5">
+        <h4 class="text-secondary mb-4">✨ Explore Our Facilities</h4>
+
+        <!-- Row 1: Pool + Gym -->
+        <div class="row justify-content-center">
+            <div class="col-md-5 mb-4">
+                <img src="{{ url_for('static', filename='images/pool.png') }}"
+                     alt="Hotel Pool"
+                     class="img-fluid rounded shadow"
+                     style="height: 250px; width: 30%; object-fit: cover;">
+                <h5 class="mt-3">Our Pool</h5>
+                <p>Take a dip and unwind in our serene, temperature-controlled pool.</p>
+            </div>
+            <div class="col-md-5 mb-4">
+                <img src="{{ url_for('static', filename='images/gym.png') }}"
+                     alt="Hotel Gym"
+                     class="img-fluid rounded shadow"
+                     style="height: 250px; width: 30%; object-fit: cover;">
+                <h5 class="mt-3">Fitness Center</h5>
+                <p>Stay energized with our modern gym, open 24/7 for your convenience.</p>
+            </div>
+        </div>
+
+        <!-- Row 2: Restaurant centered -->
+        <div class="row justify-content-center">
+            <div class="col-md-6 mb-4">
+                <img src="{{ url_for('static', filename='images/restaurant.png') }}"
+                     alt="Hotel Restaurant"
+                     class="img-fluid rounded shadow"
+                     style="height: 250px; width: 30%; object-fit: cover;">
+                <h5 class="mt-3">Our Restaurant</h5>
+                <p>Enjoy delicious local and international cuisine in our cozy dining area.</p>
+            </div>
+        </div>
+
+        <!-- Final Row: Why Guests Love Us + Contact -->
+        <div class="row justify-content-center">
+            <div class="col-md-8 mb-4 text-start">
+                <div class="p-3">
+                    <h5 class="text-primary">💬 Why Guests Love Us</h5>
+                    <p>“A home away from home.” Our guests often praise the warm hospitality, relaxing atmosphere, and personalized service. Whether you're here to rest, work, or explore — you'll feel right at home.</p>
+
+                    <h5 class="text-primary mt-4">📞 Contact Us</h5>
+                    <p><strong>Phone:</strong> +1 (555) 123-4567</p>
+                    <p><strong>Email:</strong> stay@ourhotel.com</p>
+                    <p><strong>Open:</strong> 24/7, Every Day</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

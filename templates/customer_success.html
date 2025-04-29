@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5 text-center">
+    <h2>🎉 Thank you for trusting us{{ " " + user['name'] if user and 'name' in user else "" }}!</h2>
+    <p class="lead">Your booking request has been submitted successfully and is pending approval.</p>
+    <p>We are happy to be your choice. You can check your booking status anytime by logging into your dashboard.</p>
+    
+    <div class="mt-4">
+        <a href="/guest/dashboard" class="btn btn-primary me-2">📋 Check My Booking</a>
+        <a href="/check_in" class="btn btn-success me-2">➕ Make Another Booking</a>
+        <a href="/logout" class="btn btn-outline-danger">🚪 Logout</a>
+    </div>
+</div>
+{% endblock %}
