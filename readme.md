@@ -4,7 +4,7 @@ title: "Hotel la Marseillas Booking App"
 output: html_document
 ---
 
-## Hotel la Marseillas Booking Web App
+## 🏨 Hotel la Marseillas Booking App
 
 This is a hotel room booking management system, built with Python and MySQL. It allows guests to check availability, book rooms, and submit service requests, while admins can manage users, rooms, and bookings.
 
@@ -22,7 +22,7 @@ This is a hotel room booking management system, built with Python and MySQL. It 
 ## Relational Schema
 
 (*Include ER diagram or textual description here if applicable*)
-
+You can refer to the sql document for more information
 
 ---
 
@@ -37,13 +37,13 @@ This is a hotel room booking management system, built with Python and MySQL. It 
 
 ## Project Structure
 
-- `app.py` — Main entry point and API controller  
-- `baseObject.py` — Core DB handler (CRUD ops)  
-- `Booking.py` — Manages bookings  
-- `User.py` — Handles users, roles, login  
-- `Room.py` — Manages room data and availability  
-- `config.yml` — DB config  
-- `Templates.html` — Frontend HTML templates  
+- `app.py` — 🚀 Main entry point and API controller  
+- `baseObject.py` — 🧱 Core DB handler (CRUD ops)  
+- `Booking.py` — 📝 Manages bookings  
+- `User.py` — 🔐 Handles users, roles, login  
+- `Room.py` — 🛏️ Manages room data and availability  
+- `config.yml` — ⚙️ DB config  
+- `Templates.html` — 🖼️ Frontend HTML templates 
 
 ---
 
@@ -230,11 +230,14 @@ with Room() as room:
         description="Overlooks the ocean"
     )
 ```
+## 📌 Future Improvements
 
+- 🧾 Add payment integration (Stripe or PayPal)  
+- 📧 Email notifications for booking confirmations and reminders  
+- 🧹 Cleaning schedule management for housekeeping staff  
 ---
 
 ## Notes
 
 - Server-side session management
-- ~8-minute timeout
 - RBAC-based dashboard & permission system
