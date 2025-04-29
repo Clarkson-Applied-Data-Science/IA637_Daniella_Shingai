@@ -1,13 +1,10 @@
 
----
-title: "Hotel la Marseillas Booking App"
-output: html_document
----
 
-## 🏨 Hotel la Marseillas Booking App
+
+## 🏨 Hotel le Marseillas Booking App
 
 This is a hotel room booking management system, built with Python and MySQL. It allows guests to check availability, book rooms, and submit service requests, while admins can manage users, rooms, and bookings.
-
+![Alt text for image](hotel.png)
 ---
 
 ## Sample Users
