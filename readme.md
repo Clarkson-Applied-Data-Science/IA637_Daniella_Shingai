@@ -142,11 +142,13 @@ Visit `127.0.0.1` in browser.
 ---
 
 ## Guest Actions
+![Alt text for image](guest.png)
+- **View available rooms**
+- **Create bookings**
+![Alt text for image](checkin.png)
 
-- View available rooms
-- Create bookings
-- View past/upcoming bookings
-- Submit special requests
+**View past/upcoming bookings and Submit special requests**
+![Alt text for image](booking.png)
 
 ---
 
@@ -157,6 +159,7 @@ Visit `127.0.0.1` in browser.
 - Manage users and guest requests
 - Visual dashboard with reports
 
+![Alt text for image](dashboard.png)
 ---
 
 ## Dashboard Visualizations
@@ -168,6 +171,8 @@ Visit `127.0.0.1` in browser.
 | Bar Chart (Horiz.)  | `get_top_5_guests()`         | Most frequent guests              |
 | Line Chart          | `get_bookings_over_time()`   | Booking trends over time          |
 | Line Chart          | `get_daily_revenue()`        | Daily confirmed booking revenue   |
+
+![Alt text for image](analysis.png)
 
 Example SQL for Revenue by Room Type:
 
