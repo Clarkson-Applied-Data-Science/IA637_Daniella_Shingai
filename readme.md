@@ -244,3 +244,7 @@ with Room() as room:
 
 - Server-side session management
 - RBAC-based dashboard & permission system
+
+
+
+**DANIELLA BEKOBO AND SHINGAI KAMOTO**
