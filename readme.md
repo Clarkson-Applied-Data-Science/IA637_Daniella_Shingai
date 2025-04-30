@@ -4,7 +4,7 @@
 ## 🏨 Hotel le Marseillas Booking App
 
 This is a hotel room booking management system, built with Python and MySQL. It allows guests to check availability, book rooms, and submit service requests, while admins can manage users, rooms, and bookings.
-![Alt text for image](hotel.png)
+![Alt text for image](hotel1.png)
 ---
 
 ## Sample Users
@@ -18,9 +18,10 @@ This is a hotel room booking management system, built with Python and MySQL. It 
 
 ## Relational Schema
 
-(*Include ER diagram or textual description here if applicable*)
-You can refer to the sql document for more information
 
+You can refer to the sql document for more information about the creation of tables.
+
+![Alt text for image](unnamed.png)
 ---
 
 ## Tech Stack
