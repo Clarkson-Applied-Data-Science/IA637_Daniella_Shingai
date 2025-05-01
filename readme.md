@@ -4,7 +4,7 @@
 ## 🏨 Hotel le Marseillas Booking App
 
 This is a hotel room booking management system, built with Python and MySQL. It allows guests to check availability, book rooms, and submit service requests, while admins can manage users, rooms, and bookings.
-![Alt text for image](hotel1.png)
+![Alt text for image](images/hotel1.png)
 ---
 
 ## Sample Users
@@ -21,7 +21,7 @@ This is a hotel room booking management system, built with Python and MySQL. It 
 
 You can refer to the sql document for more information about the creation of tables.
 
-![Alt text for image](unnamed.png)
+![Alt text for image](images/unnamed.png)
 ---
 
 ## Tech Stack
@@ -142,13 +142,13 @@ Visit `127.0.0.1` in browser.
 ---
 
 ## Guest Actions
-![Alt text for image](guest.png)
+![Alt text for image](images/guest.png)
 - **View available rooms**
 - **Create bookings**
-![Alt text for image](checkin.png)
+![Alt text for image](images/checkin.png)
 
 **View past/upcoming bookings and Submit special requests**
-![Alt text for image](booking.png)
+![Alt text for image](images/booking.png)
 
 ---
 
@@ -159,7 +159,7 @@ Visit `127.0.0.1` in browser.
 - Manage users and guest requests
 - Visual dashboard with reports
 
-![Alt text for image](dashboard.png)
+![Alt text for image](images/dashboard.png)
 ---
 
 ## Dashboard Visualizations
@@ -172,7 +172,7 @@ Visit `127.0.0.1` in browser.
 | Line Chart          | `get_bookings_over_time()`   | Booking trends over time          |
 | Line Chart          | `get_daily_revenue()`        | Daily confirmed booking revenue   |
 
-![Alt text for image](analysis.png)
+![Alt text for image](images/analysis.png)
 
 Example SQL for Revenue by Room Type:
 
