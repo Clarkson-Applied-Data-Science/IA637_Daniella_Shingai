@@ -236,8 +236,8 @@ with Room() as room:
 ## 📌 Future Improvements
 
 - 🧾 Add payment integration (Stripe or PayPal)  
-- 📧 Email notifications for booking confirmations and reminders  
-- 🧹 Cleaning schedule management for housekeeping staff  
+-  Email notifications for booking confirmations and reminders  
+
 ---
 
 ## Notes
